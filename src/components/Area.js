@@ -1,27 +1,43 @@
 import React from "react";
 import "../stylesheets/Area.css";
 
-function Area() {
+import Host from "./Host"
+
+function Area({area, hosts}) {
+  let {id, name, limit, auth_req} = area
+
+  const renderHosts = hosts.map(host => (
+    <Host 
+      host={host}
+      key={host.id}
+    /> 
+  ))
+
+  function capitalize (string) {
+    return string[0].toUpperCase() + string.slice(1)
+  }
+
+
   return (
     <div
       className="area"
       id={
-        /* Pass in the area name here to make sure this is styled correctly */ "id"
+        name
       }
     >
       <h3 className="labels">
-        {/* Don't just pass in the name from the data...clean that thing up */}
+        {capitalize(name).replace(/_/g, " ")}
       </h3>
-      {/* See Checkpoint 1 item 2 in the Readme for a clue as to what goes here */}
+      {renderHosts}
     </div>
   );
 }
 
 Area.propTypes = {
   hosts: function (props) {
-    if (props.hosts.length > props.limit) {
+    if (props.hosts.length > props.area.limit) {
       throw Error(
-        `HEY!! You got too many hosts in ${props.name}. The limit for that area is ${props.limit}. You gotta fix that!`
+        `HEY!! You got too many hosts in ${props.area.name}. The limit for that area is ${props.area.limit}. You gotta fix that!`
       );
     }
   },
