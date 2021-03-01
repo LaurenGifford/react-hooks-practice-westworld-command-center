@@ -7,16 +7,28 @@ import HostInfo from "./HostInfo"
 import LogPanel from "./LogPanel"
 
 
-function Headquarters({hosts}) {
-  const [hostSelected, setHostSelected] = useState(false)
+function Headquarters({hosts, selectedHost, onHostSelection, setHostSelected, hostSelected}) {
+  // const [hostSelected, setHostSelected] = useState(false)
+
+
   return (
     <Grid celled="internally">
-      <Grid.Column width={8}><ColdStorage hosts={hosts} /></Grid.Column>
+      <Grid.Column width={8}>
+        <ColdStorage 
+          hosts={hosts} 
+          selectedHost={selectedHost}
+          hostSelected={hostSelected}
+          onHostSelection={onHostSelection}
+          setHostSelected={setHostSelected}
+        />
+      </Grid.Column>
       <Grid.Column width={5}>
-        {hostSelected ? <Details /> :
+        {hostSelected ? 
         <HostInfo 
-          hosts={hosts}
-        />}
+        hosts={hosts}
+        hostSelected={hostSelected}
+        selectedHost={selectedHost}
+      /> : <Details />}
       </Grid.Column>
       <Grid.Column width={3}>
         <LogPanel />

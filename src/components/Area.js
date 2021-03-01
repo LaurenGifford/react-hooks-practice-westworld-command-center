@@ -3,18 +3,23 @@ import "../stylesheets/Area.css";
 
 import Host from "./Host"
 
-function Area({area, hosts}) {
-  let {id, name, limit, auth_req} = area
+function Area({area, hosts, hostSelected, selectedHost, onHostSelection, setHostSelected}) {
+  const {id, name, limit, auth_req} = area
 
   const renderHosts = hosts.map(host => (
     <Host 
       host={host}
       key={host.id}
+      hostSelected={hostSelected}
+      selectedHost={selectedHost}
+      onHostSelection={onHostSelection}
+      setHostSelected={setHostSelected}
     /> 
   ))
 
-  function capitalize (string) {
-    return string[0].toUpperCase() + string.slice(1)
+  function format (string) {
+    let capitalized = string[0].toUpperCase() + string.slice(1)
+    return capitalized.replace(/_/g, " ")
   }
 
 
@@ -26,7 +31,8 @@ function Area({area, hosts}) {
       }
     >
       <h3 className="labels">
-        {capitalize(name).replace(/_/g, " ")}
+        {format(name)}
+        {/* {format(name).replace(/_/g, " ")} */}
       </h3>
       {renderHosts}
     </div>
